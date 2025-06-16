@@ -1,48 +1,14 @@
 import { notFound } from "next/navigation"
 import type { Metadata, ResolvingMetadata } from "next"
 import { drupal } from "@/lib/drupal"
+import { getNode } from "@/lib/node"
 import { getBreadcrumb } from "@/lib/breadcrumb"
-import { getPathFromSlug } from "@/lib/utils"
-import type { DrupalNode } from "next-drupal"
 import { getBlocks } from "@/lib/decoupled_kit"
 import { Block } from "@/components/drupal/Block"
 import { Node, getNodeTypes } from "@/components/drupal/Node"
 import { Header } from "@/components/drupal/Header"
 import { Footer } from "@/components/drupal/Footer"
 import { Breadcrumb } from "@/components/drupal/Breadcrumb"
-import { nodesMap } from "@/params/nodes"
-
-async function getNode(slug: string[]) {
-  const path = getPathFromSlug(slug)
-
-  const translatedPath = await drupal.translatePath(path)
-  if (!translatedPath) {
-    throw new Error("Resource not found", { cause: "NotFound" })
-  }
-
-  const type = translatedPath.jsonapi?.resourceName!
-  const uuid = translatedPath.entity.uuid
-  const params = nodesMap(type)?.params ?? {}
-
-  const resource = await drupal.getResource<DrupalNode>(type, uuid, {
-    params,
-    cache: "force-cache",
-    next: {
-      revalidate: 3600,
-    },
-  })
-
-  if (!resource) {
-    throw new Error(
-      `Failed to fetch resource: ${translatedPath?.jsonapi?.individual}`,
-      {
-        cause: "DrupalError",
-      }
-    )
-  }
-
-  return resource
-}
 
 export async function generateMetadata(
   props: NodePageProps,
@@ -113,11 +79,12 @@ export default async function NodePage(props: NodePageProps) {
   }
 
   const blocks = await getBlocks(slug, ['sidebar', 'header', 'footer_top'])
-  const breadcrumb = await getBreadcrumb(slug)
+  const menu = await getBlocks('/', ['primary_menu'], ['system'])
+  const breadcrumb = await getBreadcrumb(slug, 'page_header')
 
   return (
     <>
-    <Header blocks={blocks.header} />
+    <Header blocks={blocks?.header} menus={menu?.primary_menu} />
     <Breadcrumb breadcrumb={breadcrumb} />
     <div className="flex flex-col md:flex-row gap-6">
       <main className="w-full md:w-2/3">

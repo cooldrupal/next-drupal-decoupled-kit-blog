@@ -10,8 +10,7 @@ export const metadata: Metadata = {
 }
 
 export default async function Home() {
-  const blocks = await getBlocks('/', ['content', 'header', 'footer_top'])
-
+  const blocks = await getBlocks('/', ['content_top', 'header', 'footer_top'])
   const menu = await getBlocks('/', ['primary_menu'], ['system'])
 
   return (
