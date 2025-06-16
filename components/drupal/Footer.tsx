@@ -1,10 +1,18 @@
 import { Block } from "@/components/drupal/Block"
 import { Menu } from "@/components/drupal/Menu"
 
-export function Footer({ blocks }: any) {
+export function Footer({ blocks, menus }: any) {
   return (
     <>
-    <Menu menu_id={'footer'} class_name="inline-flex items-center px-6 py-2 border border-blue-600 hover:bg-gray-200" />
+    {
+      menus?.length &&
+      menus.map((menu: any) => (
+        <Menu
+          key={menu.id}
+          menu_id={menu.id}
+        />
+      ))
+    }
     <footer>
       {
         blocks?.length &&

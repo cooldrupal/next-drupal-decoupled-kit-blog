@@ -64,7 +64,7 @@ async function getBlocksList(path: string | string[], regions: string[], provide
   }
 
   if (!blocksList) {
-    console.error('Empty block list')
+    console.warn('Empty block list')
     return null
   }
 
@@ -173,7 +173,7 @@ export async function getBlocks(path: string | string[], regions: string[] = [],
         }
       }
       catch (error) {
-        console.error(`Error getting block "${block.label}" ID ${block.uuid}:`, error);
+        console.error(`Error getting block "${block.label}" ID ${block.uuid}:`, error)
         return null
       }
     })

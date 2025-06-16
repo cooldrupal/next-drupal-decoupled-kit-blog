@@ -5,17 +5,19 @@ import { Block } from "@/components/drupal/Block"
 import type { Metadata } from "next"
 
 export const metadata: Metadata = {
-  title: "NextJs for Drupal",
+  title: "NextJs for Drupal (Decoupled Kit)",
   description: "A Next.js site powered by a Drupal backend (Decoupled Kit).",
 }
 
 export default async function Home() {
   const blocks = await getBlocks('/', ['content', 'header', 'footer_top'])
 
+  const menu = await getBlocks('/', ['primary_menu'], ['system'])
+
   return (
     <>
-    <Header blocks={blocks?.header} />
-      <main>
+    <Header blocks={blocks?.header} menus={menu?.primary_menu} />
+    <main>
       {
         blocks?.content?.length &&
         blocks.content.map((block: any) => (
