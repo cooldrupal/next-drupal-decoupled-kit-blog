@@ -2,7 +2,10 @@ import { getBlocks } from "@/lib/decoupled_kit"
 import { getApiVersion } from "@/lib/decoupled_kit"
 import { drupal } from "@/lib/drupal"
 
-export async function getBreadcrumb(path: string | string[], region: string = 'breadcrumb') {
+type BreadcrumbItem = { text: string; url: string };
+
+export async function getBreadcrumb(path: string | string[], region: string = 'breadcrumb', title_item: string = ''):
+  Promise<BreadcrumbItem[] | null | undefined> {
   let breadcrumb = null
   const apiVersion = getApiVersion()
 
@@ -10,7 +13,6 @@ export async function getBreadcrumb(path: string | string[], region: string = 'b
     // Need to install Decoupled breadcrumb module.
     const drupalBase = process.env.NEXT_PUBLIC_DRUPAL_BASE_URL
     const apiUrl = `${drupalBase}/decoupled_kit/breadcrumb?path=${path}`
-    console.log(apiUrl, drupalBase)
 
     let data = null
     try {
@@ -41,6 +43,10 @@ export async function getBreadcrumb(path: string | string[], region: string = 'b
     if (breadcrumb) {
       breadcrumb = Object.values(breadcrumb)[0].breadcrumb ?? null
     }
+  }
+
+  if (title_item) {
+    breadcrumb?.push({ text: title_item, url: '' });
   }
 
   return breadcrumb
