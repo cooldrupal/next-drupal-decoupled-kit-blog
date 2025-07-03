@@ -13,3 +13,5 @@ Need to install and enable drupal modules:
   - jsonapi_menu_items
   - jsonapi_views
 
+Demo-project: https://github.com/cooldrupal/drupal-top100-next
+Demo-site: https://drupaltop100.vercel.app/
