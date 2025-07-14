@@ -1,4 +1,4 @@
-import { getBlocks } from "@/lib/decoupled_kit"
+import { getBlocks, getMenus } from "@/lib/decoupled_kit"
 import { Header } from "@/components/drupal/Header"
 import { Footer } from "@/components/drupal/Footer"
 import { Block } from "@/components/drupal/Block"
@@ -11,7 +11,7 @@ export const metadata: Metadata = {
 
 export default async function Home() {
   const blocks = await getBlocks('/', ['content', 'header', 'footer_top'])
-  const menu = await getBlocks('/', ['primary_menu'], ['system'])
+  const menu = await getMenus('/', ['primary_menu'])
 
   return (
     <>

@@ -3,7 +3,7 @@ import type { Metadata, ResolvingMetadata } from "next"
 import { drupal } from "@/lib/drupal"
 import { getNode } from "@/lib/node"
 import { getBreadcrumb } from "@/lib/breadcrumb"
-import { getBlocks } from "@/lib/decoupled_kit"
+import { getBlocks, getMenus } from "@/lib/decoupled_kit"
 import { Block } from "@/components/drupal/Block"
 import { Node, getNodeTypes } from "@/components/drupal/Node"
 import { Header } from "@/components/drupal/Header"
@@ -79,7 +79,7 @@ export default async function NodePage(props: NodePageProps) {
   }
 
   const blocks = await getBlocks(slug, ['sidebar', 'header', 'footer_top'])
-  const menu = await getBlocks('/', ['primary_menu'], ['system'])
+  const menu = await getMenus('/', ['primary_menu'])
   const breadcrumb = await getBreadcrumb(slug, 'page_header')
 
   return (

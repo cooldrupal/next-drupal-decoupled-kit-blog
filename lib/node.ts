@@ -4,7 +4,7 @@ import { getPathFromSlug } from "@/lib/utils"
 import type { DrupalNode } from "next-drupal"
 
 export async function getNode(slug: string | string[]) {
-  const path = typeof slug === 'string' ? slug : getPathFromSlug(slug)
+  const path = getPathFromSlug(slug)
 
   const translatedPath = await drupal.translatePath(path)
   if (!translatedPath) {
@@ -13,14 +13,10 @@ export async function getNode(slug: string | string[]) {
 
   const type = translatedPath.jsonapi?.resourceName!
   const uuid = translatedPath.entity.uuid
-  const params = nodesMap(type)?.params ?? {}
 
+  const params = nodesMap(type)?.params ?? {}
   const resource = await drupal.getResource<DrupalNode>(type, uuid, {
     params,
-    cache: "force-cache",
-    next: {
-      revalidate: 3600,
-    },
   })
 
   if (!resource) {

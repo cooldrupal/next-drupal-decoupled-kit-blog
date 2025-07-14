@@ -11,7 +11,11 @@ export function absoluteUrl(input: string) {
   return `${process.env.NEXT_PUBLIC_DRUPAL_BASE_URL}${input}`
 }
 
-export function getPathFromSlug(slug: string[]) {
+export function getPathFromSlug(slug: string[] | string) {
+  if (typeof slug === 'string') {
+    return slug;
+  }
+
   return `/${slug.join("/")}`
 }
 

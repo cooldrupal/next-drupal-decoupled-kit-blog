@@ -13,5 +13,19 @@ Need to install and enable drupal modules:
   - jsonapi_menu_items
   - jsonapi_views
 
+## Functions
+
+  - getBlocks()
+    Get blocks list by current page and blocks regions.
+  - getMenus()
+    Get menus list by current page.
+  - getBreadcrumb()
+    Get breadcrumb by current page.
+  - getRedirect
+    Get redirect by current page.
+
+## Resources
+
 Demo-project: https://github.com/cooldrupal/drupal-top100-next
+
 Demo-site: https://drupaltop100.vercel.app/
