@@ -1,3 +1,5 @@
+import { nodesMap  } from '@/params/nodes'
+import { Node as Default } from "@/components/nodes/Node";
 import { Article } from "@/components/nodes/Article";
 import { BasicPage } from "@/components/nodes/BasicPage";
 
@@ -12,9 +14,9 @@ const componentsMap: Record<string, React.ComponentType<NodeProps>> = {
 
 export function Node({ node }: NodeProps) {
   const Component = componentsMap[node.type];
-  return Component ? <Component node={node} /> : null;
+  return Component ? <Component node={node} /> : <Default node={node} />;
 }
 
 export function getNodeTypes(): string[] {
-  return Object.keys(componentsMap);
+  return Object.keys(nodesMap());
 }

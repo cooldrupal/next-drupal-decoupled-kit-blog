@@ -3,15 +3,18 @@
 A simple starter for building your site with Next.js and Drupal (Decoupled Kit module).
 Forked from https://github.com/chapter-three/next-drupal-basic-starter .
 
-## How to use
+## How to install
 
-`npx create-next-app -e https://github.com/cooldrupal/next-drupal-decoupled-kit-blog`
-
-Need to install and enable drupal modules:
-  - next
-  - decoupled_kit
-  - jsonapi_menu_items
-  - jsonapi_views
+  - `npx create-next-app -e https://github.com/cooldrupal/next-drupal-decoupled-kit-blog`
+  - `cd [APP DIRECTORY]`
+  - `cp .env.example .env` (or `cp .env.example .env.local`) and set variables
+  - Install and enable drupal modules:
+    - Next
+    - Decoupled Kit (Decoupled Kit Block)
+    - JSON:API Menu Items
+    - JSON:API Views
+  - Configure params/* files
+  - `npm run dev`
 
 ## Functions
 
@@ -27,5 +30,4 @@ Need to install and enable drupal modules:
 ## Resources
 
 Demo-project: https://github.com/cooldrupal/drupal-top100-next
-
 Demo-site: https://drupaltop100.vercel.app/

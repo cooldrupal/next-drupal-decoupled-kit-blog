@@ -35,6 +35,10 @@ export async function getBlocks(
           }
         }
         else if (block.provider === 'views') {
+          if (!block.plugin.startsWith('views_block:')) {
+            return null
+          }
+
           const viewId = block.plugin.replace(/^views_block:/, "").replace("-", "--")
           const options = blocksMap(viewId)
 
@@ -42,11 +46,11 @@ export async function getBlocks(
             if (Array.isArray(options.params['views-argument'])) {
               options.params['views-argument'] = options.params['views-argument'].map(value => {
                 if (typeof value === 'string' && value.startsWith('***')) {
-                  const key = value.slice(3).toLowerCase();
-                  return params[key as keyof typeof params] ?? value;
+                  const key = value.slice(3).toLowerCase()
+                  return params[key as keyof typeof params] ?? value
                 }
-                return value;
-              });
+                return value
+              })
             }
           }
 
@@ -72,7 +76,7 @@ export async function getBlocks(
         return null
       }
     })
-  );
+  )
 
   if (!blocks) {
     return null
@@ -87,7 +91,7 @@ export async function getMenus(
   providers: string[] = ['system'],
   params: Record<string, any> | null = null,
 ) {
-  return getBlocks(path, regions, providers, params);
+  return getBlocks(path, regions, providers, params)
 }
 
 async function getBlocksList(path: string | string[], regions: string[], providers: string[]) {
@@ -98,13 +102,13 @@ async function getBlocksList(path: string | string[], regions: string[], provide
     const res = await drupal.fetch(apiUrl)
 
     if (!res.ok) {
-      console.error(`Empty fetched applications "${apiUrl}"`);
+      console.error(`Empty fetched applications "${apiUrl}"`)
       return null
     }
-    blocksList = await res.json();
+    blocksList = await res.json()
   }
   catch (error) {
-    console.error(`Error getting API "${apiUrl}"`, error);
+    console.error(`Error getting API "${apiUrl}"`, error)
     return null
   }
 
@@ -124,7 +128,7 @@ async function getBlocksList(path: string | string[], regions: string[], provide
   if (apiVersion === 1) {
     const blocks = filteredBlocks
       .map((block: any) => {
-        const [typePart, uuid] = block.plugin.split(':');
+        const [typePart, uuid] = block.plugin.split(':')
         const type = block.bundle ? `${block.settings.provider}--${block.bundle}` : block.settings.provider
 
         return {
@@ -169,8 +173,8 @@ async function getBlocksList(path: string | string[], regions: string[], provide
           plugin: block.attributes.plugin,
           provider: block.attributes.settings.provider,
           settings: block.attributes.settings,
-        };
-      });
+        }
+      })
 
     return blocks
   }
@@ -193,7 +197,7 @@ function getBlocksUrl(path: string | string[], regions: string[] = []) {
           const regionParam = regions.join(',')
           url += `&regions=${regionParam}`
         }
-        return url;
+        return url
       })()
       : (() => {
         let url = `${drupalBase}/jsonapi/decoupled_kit/blocks?current_path=${path}`
@@ -205,20 +209,23 @@ function getBlocksUrl(path: string | string[], regions: string[] = []) {
           url += `&current_theme=${currentTheme}`
         }
         return url
-      })();
+      })()
 
   return apiUrl
 }
 
 function groupByRegion(items: any) {
   return items.reduce((acc: any, item: any) => {
-    const region = item.region;
-    if (!acc[region]) {
-      acc[region] = [];
+    if (!item) {
+      return acc;
     }
-    acc[region].push(item);
-    return acc;
-  }, {} as Record<string, typeof items>);
+    const region = item.region
+    if (!acc[region]) {
+      acc[region] = []
+    }
+    acc[region].push(item)
+    return acc
+  }, {} as Record<string, typeof items>)
 }
 
 function getRedirectsUrl(path: string | string[]) {
@@ -229,7 +236,7 @@ function getRedirectsUrl(path: string | string[]) {
 
   const apiUrl = apiVersion === 1
     ? `${drupalBase}/decoupled_kit/redirect?path=${path}`
-    : `${drupalBase}/jsonapi/decoupled_kit/redirect?current_path=${path}`;
+    : `${drupalBase}/jsonapi/decoupled_kit/redirect?current_path=${path}`
 
   return apiUrl
 }
@@ -244,15 +251,15 @@ export async function getRedirect(path: string | string[]) {
     const res = await drupal.fetch(apiUrl)
 
     if (!res.ok) {
-      console.error(`Empty fetched applications "${apiUrl}"`);
+      console.error(`Empty fetched applications "${apiUrl}"`)
       return null
     }
-    data = await res.json();
+    data = await res.json()
   }
   catch (error) {
-    console.error(`Error getting API "${apiUrl}"`, error);
+    console.error(`Error getting API "${apiUrl}"`, error)
     return null
   }
 
-  return data;
+  return data
 }

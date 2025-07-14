@@ -2,7 +2,6 @@ import { textSummary } from "@/lib/utils"
 import { Link } from "@/components/navigation/Link"
 
 export function ArticleTeaser({ node }: any) {
-  console.log(node)
   const teaser = node.body?.summary ? node.body.summary : textSummary(node.body?.processed)
   return (
     <article>
