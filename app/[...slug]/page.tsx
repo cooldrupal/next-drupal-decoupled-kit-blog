@@ -10,27 +10,6 @@ import { Header } from "@/components/drupal/Header"
 import { Footer } from "@/components/drupal/Footer"
 import { Breadcrumb } from "@/components/drupal/Breadcrumb"
 
-export async function generateMetadata(
-  props: NodePageProps,
-  parent: ResolvingMetadata
-): Promise<Metadata> {
-  const params = await props.params
-
-  const { slug } = params
-
-  let node
-  try {
-    node = await getNode(slug)
-  } catch (e) {
-    // If we fail to fetch the node, don't return any metadata.
-    return {}
-  }
-
-  return {
-    title: node.title,
-  }
-}
-
 type NodePageParams = {
   slug: string[]
 }
@@ -41,26 +20,32 @@ type NodePageProps = {
 
 const RESOURCE_TYPES = getNodeTypes()
 
+export async function generateMetadata(
+  props: NodePageProps,
+  parent: ResolvingMetadata
+): Promise<Metadata> {
+  const params = await props.params
+  const { slug } = params
+
+  let node
+  try {
+    node = await getNode(slug)
+  } catch (error) {
+    return {}
+  }
+
+  return {
+    title: node.title,
+  }
+}
+
 export async function generateStaticParams(): Promise<NodePageParams[]> {
   const resources = await drupal.getResourceCollectionPathSegments(
     RESOURCE_TYPES,
-    {
-      // The pathPrefix will be removed from the returned path segments array.
-      // pathPrefix: "/blog",
-      // The list of locales to return.
-      // locales: ["en", "es"],
-      // The default locale.
-      // defaultLocale: "en",
-    }
+    {}
   )
 
   return resources.map((resource) => {
-    // resources is an array containing objects like: {
-    //   path: "/blog/some-category/a-blog-post",
-    //   type: "node--article",
-    //   locale: "en", // or `undefined` if no `locales` requested.
-    //   segments: ["blog", "some-category", "a-blog-post"],
-    // }
     return {
       slug: resource.segments,
     }
@@ -79,8 +64,8 @@ export default async function NodePage(props: NodePageProps) {
   }
 
   const blocks = await getBlocks(slug, ['sidebar', 'header', 'footer_top'])
-  const menu = await getMenus('/', ['primary_menu'])
-  const breadcrumb = await getBreadcrumb(slug, 'page_header')
+  const menu = await getMenus(slug, ['primary_menu'])
+  const breadcrumb = await getBreadcrumb(slug)
 
   return (
     <>
