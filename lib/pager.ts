@@ -5,6 +5,7 @@ export interface PagerLinks {
   next?: string;
   prev?: string;
   pages: Record<number, string>;
+  over?: boolean;
 }
 
 export function getPagerLinks(slug: string, current_page: number, total_count: number, page_count: number = 10): PagerLinks | null {
@@ -28,9 +29,12 @@ export function getPagerLinks(slug: string, current_page: number, total_count: n
     links.next = `/${slug}?page=${current_page + 1}`
   }
 
-  for (let page = 0; page < total_pages; page++) {
+  const pager_pages = total_pages > 9 ? 9 : total_pages;
+  for (let page = 0; page < pager_pages; page++) {
     links.pages[page + 1] = page == 0 ? links.first : `/${slug}?page=${page}`
   }
+
+  links.over = total_pages > pager_pages
 
   return links;
 }

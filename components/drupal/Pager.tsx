@@ -39,6 +39,10 @@ export function PagerFull({ links, page }: PagerMoreProps) {
         );
       })}
 
+      {(links.over) && (
+        <span className="p-4">...</span>
+      )}
+
       {(links.next) && (
         <Link href={links.next} title='Go to next page'>
           <span className="p-4 text-center text-xl bg-gray-300 hover:bg-orange-500 cursor-pointer">
