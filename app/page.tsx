@@ -1,4 +1,5 @@
-import { getBlocks, getMenus } from "@/lib/decoupled_kit"
+import { getBlocks } from "@/lib/decoupled_kit"
+import { getMenus } from "@/lib/menu"
 import { Header } from "@/components/drupal/Header"
 import { Footer } from "@/components/drupal/Footer"
 import { Block } from "@/components/drupal/Block"

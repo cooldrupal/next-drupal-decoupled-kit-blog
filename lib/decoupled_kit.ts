@@ -85,15 +85,6 @@ export async function getBlocks(
   return groupByRegion(blocks)
 }
 
-export async function getMenus(
-  path: string | string[],
-  regions: string[] = [],
-  providers: string[] = ['system'],
-  params: Record<string, any> | null = null,
-) {
-  return getBlocks(path, regions, providers, params)
-}
-
 async function getBlocksList(path: string | string[], regions: string[], providers: string[]) {
   const apiUrl = getBlocksUrl(path, regions)
 

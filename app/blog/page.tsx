@@ -4,6 +4,7 @@ import { Footer } from "@/components/drupal/Footer"
 import { getBreadcrumb } from "@/lib/breadcrumb"
 import { Breadcrumb } from "@/components/drupal/Breadcrumb"
 import { getBlocks } from "@/lib/decoupled_kit"
+import { getMenus } from "@/lib/menu"
 import { Block } from "@/components/drupal/Block"
 import { ArticleTeaser } from "@/components/nodes/ArticleTeaser"
 
@@ -11,12 +12,13 @@ export default async function Blog(props: any) {
   const slug = 'blog'
 
   const blocks = await getBlocks(slug, ['sidebar', 'header', 'footer_top'])
+  const menu = await getMenus(slug, ['primary_menu'])
   const breadcrumb = await getBreadcrumb(slug)
   const view = await drupal.getView("articles--page_1")
 
   return (
     <>
-    <Header blocks={blocks.header} />
+    <Header blocks={blocks.header} menus={menu?.primary_menu} />
     <Breadcrumb breadcrumb={breadcrumb} />
     <div className="flex flex-col md:flex-row gap-6">
       <main className="w-full md:w-2/3">
