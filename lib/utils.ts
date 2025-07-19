@@ -61,10 +61,20 @@ export function textSummary(
 
 export function isEmpty(value: any): boolean {
   if (value == null) return true;
-
   if (Array.isArray(value)) return value.length === 0;
-
   if (typeof value === 'object') return Object.keys(value).length === 0;
-
   return false;
+}
+
+type SearchParams = Record<string, string | string[] | undefined>
+type Filters = Record<string, string>;
+
+export function filterParams(searchParams: SearchParams): Filters {
+  const filters: Filters = {};
+  for (const [key, value] of Object.entries(searchParams)) {
+    if (key !== 'page' && value !== undefined && value !== '') {
+      filters[key] = value.toString();
+    }
+  }
+  return filters;
 }
