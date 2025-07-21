@@ -24,10 +24,12 @@ Forked from https://github.com/chapter-three/next-drupal-basic-starter .
     Get menus list by current page.
   - getBreadcrumb()
     Get breadcrumb by current page.
-  - getRedirect
+  - getRedirect()
     Get redirect by current page.
 
 ## Resources
 
-Demo-project: https://github.com/cooldrupal/drupal-top100-next
-Demo-site: https://drupaltop100.vercel.app/
+  - Demo-project: https://github.com/cooldrupal/drupal-top100-next
+  - Demo-site: https://drupaltop100.vercel.app/
+
+  Author: Serhii Klietsov - https://www.linkedin.com/in/serhii-klietsov-a125909a/

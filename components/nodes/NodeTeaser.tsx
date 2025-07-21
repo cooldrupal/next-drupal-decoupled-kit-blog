@@ -1,11 +1,14 @@
+import type { DrupalNode } from "next-drupal"
 import { Link } from "@/components/navigation/Link"
 
-export function NodeTeaser({ node }: any) {
+interface NodeProps {
+  node: DrupalNode
+}
+
+export function NodeTeaser({ node, ...props }: NodeProps) {
   return (
-    <article>
-      <Link href={node.path.alias}>
-        <span className="mb-4 mt-2 text-xl font-light">{node.title}</span>
-      </Link>
+    <article {...props}>
+      <Link href={node.path.alias}>{node.title}</Link>
     </article>
   )
 }
