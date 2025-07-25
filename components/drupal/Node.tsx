@@ -12,8 +12,12 @@ const componentsMap: Record<string, React.ComponentType<NodeProps>> = {
   "node--article": Article,
 };
 
-export function Node({ node }: NodeProps) {
-  const Component = componentsMap[node.type];
+export function Node({ node, view }: NodeProps) {
+  let node_type = node.type
+  if (view) {
+    node_type = `${node_type}--${view}`
+  }
+  const Component = componentsMap[node_type];
   return Component ? <Component node={node} /> : <Default node={node} />;
 }
 

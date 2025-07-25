@@ -1,7 +1,6 @@
 import { drupal } from "@/lib/drupal"
 import { nodesMap } from "@/params/nodes"
 import { getPathFromSlug } from "@/lib/utils"
-import type { DrupalNode } from "next-drupal"
 
 export async function getNode(slug: string | string[]) {
   const path = getPathFromSlug(slug)
@@ -15,7 +14,7 @@ export async function getNode(slug: string | string[]) {
   const uuid = translatedPath.entity.uuid
 
   const params = nodesMap(type)?.params ?? {}
-  const resource = await drupal.getResource<DrupalNode>(type, uuid, {
+  const resource = await drupal.getResource(type, uuid, {
     params,
   })
 

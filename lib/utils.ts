@@ -78,3 +78,11 @@ export function filterParams(searchParams: SearchParams): Filters {
   }
   return filters;
 }
+
+export function entityInfo(type: string) {
+  const [entity_type, bundle] = type?.split('--') || []
+  return {
+    'entity_type': entity_type,
+    'bundle': bundle
+  };
+}
