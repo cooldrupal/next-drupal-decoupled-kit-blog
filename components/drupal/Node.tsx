@@ -5,6 +5,7 @@ import { BasicPage } from "@/components/nodes/BasicPage";
 
 interface NodeProps {
   node: any;
+  view?: string;
 }
 
 const componentsMap: Record<string, React.ComponentType<NodeProps>> = {
