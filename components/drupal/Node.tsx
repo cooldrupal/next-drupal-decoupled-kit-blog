@@ -1,6 +1,7 @@
 import { nodesMap  } from '@/params/nodes'
 import { Node as Default } from "@/components/nodes/Node";
-import { Article } from "@/components/nodes/Article";
+import { Blog } from "@/components/nodes/Blog";
+import { BlogTeaser } from "@/components/nodes/BlogTeaser";
 import { BasicPage } from "@/components/nodes/BasicPage";
 
 interface NodeProps {
@@ -10,7 +11,8 @@ interface NodeProps {
 
 const componentsMap: Record<string, React.ComponentType<NodeProps>> = {
   "node--page": BasicPage,
-  "node--article": Article,
+  "node--blog": Blog,
+  "node--blog--teaser": BlogTeaser,
 };
 
 export function Node({ node, view }: NodeProps) {

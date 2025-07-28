@@ -2,7 +2,7 @@ import { getMenu } from "next-drupal"
 import { menusMap } from "@/params/menus";
 import { Link } from "@/components/navigation/Link"
 
-export async function Menu({menu_id, list_class='', item_class = ''}: any) {
+export async function Menu({ menu_id, container_class = '', list_class = '', item_class = '' }: any) {
   const id = menu_id.includes(':') ? menu_id.split(':')[1] : menu_id
 
   let menu
@@ -17,21 +17,18 @@ export async function Menu({menu_id, list_class='', item_class = ''}: any) {
   const options = menusMap(id);
 
   return (
-    <nav className={`menu ${id}`}>
-      <ul className={options?.list_class}>
-      {menu?.items?.map((item) => {
-        return (
-          <li key={item.id}>
-            <Link
-              href={item.url}
-              className={options?.item_class}
-            >
-              {item.title}
-            </Link>
-          </li>
-        )
-      })}
-    </ul>
-    </nav>
+    <div className="w-full sm:w-auto sm:ml-auto">
+      <nav className={`menu_${id}`}>
+        <ul className={options?.list_class}>
+          {menu?.items?.map((item) => {
+            return (<li key={item.id} className={options?.item_class}>
+              <Link href={item.url} className={options?.link_class}>
+                <span className={options?.span_class}>{item.title}</span>
+              </Link>
+            </li>)
+          })}
+        </ul>
+      </nav>
+    </div>
   )
 }

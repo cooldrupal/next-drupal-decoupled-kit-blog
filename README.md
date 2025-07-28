@@ -26,6 +26,8 @@ Forked from https://github.com/chapter-three/next-drupal-basic-starter .
     Get breadcrumb by current page.
   - getRedirect()
     Get redirect by current page.
+  - getMetatag()
+    Get metatags for current page.
 
 ## Resources
 

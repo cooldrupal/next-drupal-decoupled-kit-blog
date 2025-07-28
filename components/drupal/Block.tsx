@@ -1,13 +1,15 @@
 import { blocksMap } from "@/params/blocks";
 import { Block as DefaultBlock } from "@/components/blocks/Block";
-import { BlueBlock } from "@/components/blocks/BlueBlock";
+import { BlogLatest } from "@/components/blocks/BlogLatest";
+import { BlogRelated } from "@/components/blocks/BlogRelated";
 
 interface BlockProps {
   block: any;
 }
 
 const componentsMap: Record<string, React.ComponentType<BlockProps>> = {
-  BlueBlock,
+  BlogLatest,
+  BlogRelated,
 };
 
 export function Block({ block }: BlockProps) {

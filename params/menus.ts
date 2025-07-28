@@ -2,12 +2,14 @@
 export function menusMap(id?: string) {
   const map = {
     'main': {
-      list_class: "flex flex-wrap gap-4 md:flex-nowrap justify-end",
-      item_class: "inline-flex items-center px-6 py-2 border border-gray-600 rounded-full hover:bg-gray-100",
+      list_class: "flex flex-wrap sm:flex-nowrap justify-center sm:justify-end gap-4 w-full sm:w-auto text-center",
+      item_class: "w-1/2 sm:w-auto",
+      link_class: "text-2xl text-gray-600 hover:text-blue-500 font-semibold"
     },
-    'header': {
-      list_class: "flex flex-wrap gap-4 md:flex-nowrap justify-start",
-      item_class: "inline-flex items-center px-6 py-2 border border-blue-600 hover:bg-gray-200",
+    'footer': {
+      list_class: "flex flex-wrap sm:flex-nowrap justify-center sm:justify-end gap-4 w-full sm:w-auto text-center",
+      item_class: "w-1/2 sm:w-auto",
+      link_class: "text-red-500 hover:underline"
     },
   } as Record<string, any>;
 

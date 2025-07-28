@@ -1,52 +1,78 @@
 import { drupal } from "@/lib/drupal"
+import { Node } from "@/components/drupal/Node"
+import type { Metadata } from "next"
+import { isEmpty, filterParams } from "@/lib/utils"
+import { getMenus } from "@/lib/menu"
 import { Header } from "@/components/drupal/Header"
 import { Footer } from "@/components/drupal/Footer"
 import { getBreadcrumb } from "@/lib/breadcrumb"
 import { Breadcrumb } from "@/components/drupal/Breadcrumb"
-import { getBlocks } from "@/lib/decoupled_kit"
-import { getMenus } from "@/lib/menu"
-import { Block } from "@/components/drupal/Block"
-import { ArticleTeaser } from "@/components/nodes/ArticleTeaser"
+import { PagerMini } from "@/components/drupal/Pager";
+import { getPagerLinks } from "@/lib/pager"
+import { getTaxonomyTermsCollection } from "@/lib/taxonomy"
+import { FilterSelectedForm } from "@/components/forms/FilterSelectedForm"
 
-export default async function Blog(props: any) {
-  const slug = 'blog'
+const slug = 'blog'
+const title = 'Blog'
 
-  const blocks = await getBlocks(slug, ['sidebar', 'header', 'footer_top'])
-  const menu = await getMenus(slug, ['primary_menu'])
+type ViewPageParams = {
+  slug: string[]
+}
+
+type ViewPageProps = {
+  params: Promise<ViewPageParams>
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>
+}
+
+export async function generateMetadata(): Promise<Metadata> {
+  return {
+    title: title,
+  }
+}
+
+export default async function BlogPage1(props: ViewPageProps) {
+  const searchParams = await props.searchParams
+  const page = parseInt(searchParams?.page?.toString() || '0')
+  const fields = filterParams(searchParams)
+  const view = await drupal.getView("blog--page_1", {
+    params: {
+      page: page,
+      'views-filter': fields,
+    }
+  })
+  const pagerLinks = getPagerLinks(slug, searchParams, view.meta.count, 15)
+  const menu = await getMenus(slug, ['primary_menu', 'footer_top'])
   const breadcrumb = await getBreadcrumb(slug)
-  const view = await drupal.getView("articles--page_1")
-
+  const selects = [
+    {
+      name: 'field_categories_target_id',
+      optionsKey: 'category',
+      placeholder: 'Categories',
+    },
+  ]
+  const vocabularies = selects.map(select => select.optionsKey);
+  const selectOptions = await getTaxonomyTermsCollection(vocabularies)
   return (
     <>
-    <Header blocks={blocks.header} menus={menu?.primary_menu} />
-    <Breadcrumb breadcrumb={breadcrumb} />
-    <div className="flex flex-col md:flex-row gap-6">
-      <main className="w-full md:w-2/3">
-        <h1 className="mb-4 text-6xl font-black leading-tight">Articles</h1>
-        {
-          view?.results?.length &&
+      <Header menus={menu?.primary_menu} />
+      <main className="w-full">
+        <h1 className="my-4 text-6xl font-black leading-tight text-center">{title}</h1>
+        <Breadcrumb breadcrumb={breadcrumb} delimiter={'>'} />
+        <FilterSelectedForm slug={slug} fields={fields} options={selectOptions} selects={selects} />
+        {!isEmpty(view.results) && (
+          <>
             <ul>
             {view.results.map((row: any) => (
               <li key={row.id}>
-                <ArticleTeaser node={row}/>
+                <Node node={row} view='teaser' />
               </li>
             ))}
             </ul>
-        }
+            {pagerLinks && (<PagerMini links={pagerLinks} page={page} />)}
+          </>
+         )}
       </main>
-
-      <aside className="w-full md:w-1/3 bg-gray-50 p-4 rounded-lg">
-      {
-        blocks?.sidebar?.length &&
-        blocks.sidebar.map((block: any) => (
-          <div key={block?.block_id}>
-            <Block block={block} />
-          </div>
-        ))
-      }
-      </aside>
-    </div>
-    <Footer blocks={blocks.footer_top} />
+      <Footer menus={menu?.footer_top} />
     </>
   );
 }

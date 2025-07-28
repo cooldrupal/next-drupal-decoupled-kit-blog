@@ -1,28 +1,27 @@
 
 export function blocksMap(id?: string) {
   const map = {
-    'articles--block_1': {
+    'blog--latest': {
       params: {
-        include: 'field_image,uid',
+        include: 'field_featured_image,field_featured_image.field_media_image',
       },
       next: {
         revalidate: 3600,
       },
-      title: 'Latest articles',
+      title: 'Latest blog posts',
+      component: 'BlogLatest',
     },
-    'articles--block_2': {
+    'blog--related': {
       params: {
-        include: 'field_image,uid',
+        include: 'field_featured_image,field_featured_image.field_media_image',
+        'views-argument': ['***CATEGORY_TID', '***CURRENT_ID'],
       },
       next: {
         revalidate: 3600,
       },
-      title: 'Related articles',
-      component: 'BlueBlock',
+      title: 'Related blog posts',
+      component: 'BlogRelated',
     },
-    'homepage': {
-      'title': 'Info',
-    }
   } as Record<string, any>;
 
   return id ? map[id] : map;
