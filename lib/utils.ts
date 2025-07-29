@@ -92,7 +92,7 @@ export function getPath(entity: any): string {
     return entity.path.alias;
   }
 
-  const entity_info = entityInfo(entity.type).entity_type.replace('_', '/')
+  const entity_type = entityInfo(entity.type).entity_type.replace('_', '/')
   const entity_id = entity.resourceIdObjMeta.drupal_internal__target_id
-  return `/${entity_info}/${entity_id}`
+  return `/${entity_type}/${entity_id}`
 }

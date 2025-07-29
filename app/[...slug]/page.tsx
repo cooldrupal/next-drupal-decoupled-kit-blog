@@ -74,10 +74,9 @@ export default async function NodePage(props: NodePageProps) {
     notFound()
   }
 
+  let blocks, view, hasSidebar
   const entity_info = entityInfo(node.type)
   const is_taxonomy = entity_info.entity_type == 'taxonomy_term'
-
-  let blocks, view, hasSidebar
   if (is_taxonomy) {
     const options = {
       params: {
