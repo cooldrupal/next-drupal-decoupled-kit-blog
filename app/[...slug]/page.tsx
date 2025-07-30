@@ -119,12 +119,10 @@ export default async function NodePage(props: NodePageProps) {
   return (
     <>
     <Header menus={menu?.primary_menu} />
-    <h1 className="mb-4 text-6xl font-black leading-tight text-center">{node.title}</h1>
+    <h1 className="mb-4 text-6xl font-black leading-tight text-center">{is_taxonomy ? node.name : node.title}</h1>
     <Breadcrumb breadcrumb={breadcrumb} delimiter={'>'} />
-
     {is_taxonomy ? (
       <>
-      <h1 className="my-4 text-6xl font-black leading-tight text-center">{node.name}</h1>
       <ul className="w-full grid grid-cols-1 sm:grid-cols-2 gap-8">
         {view?.results.map((row: any) => (
           <li key={row.id}>
