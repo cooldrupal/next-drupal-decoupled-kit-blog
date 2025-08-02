@@ -1,3 +1,5 @@
+import { drupal } from "@/lib/drupal"
+
 export function formatDate(input: string): string {
   const date = new Date(input)
   return date.toLocaleDateString("en-US", {
@@ -12,11 +14,11 @@ export function absoluteUrl(input: string) {
 }
 
 export function getPathFromSlug(slug: string[] | string) {
-  if (typeof slug === 'string') {
-    return slug;
+  if (typeof slug !== 'string') {
+    slug = `${slug.join("/")}`
   }
 
-  return `/${slug.join("/")}`
+  return slug.startsWith('/') ? slug : `/${slug}`;
 }
 
 /**
@@ -87,12 +89,15 @@ export function entityInfo(type: string) {
   };
 }
 
-export function getPath(entity: any): string {
-  if (!isEmpty(entity.path.alias)) {
-    return entity.path.alias;
+export async function getJson(slug: string[] | string) {
+  let resource, json
+  try {
+    resource = await drupal.fetch(absoluteUrl(getPathFromSlug(slug)))
+    json = await resource.json()
+  } catch (error) {
+    console.error(error)
+    return null
   }
 
-  const entity_type = entityInfo(entity.type).entity_type.replace('_', '/')
-  const entity_id = entity.resourceIdObjMeta.drupal_internal__target_id
-  return `/${entity_type}/${entity_id}`
+  return json
 }
