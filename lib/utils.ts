@@ -89,6 +89,16 @@ export function entityInfo(type: string) {
   };
 }
 
+export function getPath(entity: any): string {
+  if (!isEmpty(entity.path.alias)) {
+    return entity.path.alias;
+  }
+
+  const entity_type = entityInfo(entity.type).entity_type.replace('_', '/')
+  const entity_id = entity.resourceIdObjMeta.drupal_internal__target_id
+  return `/${entity_type}/${entity_id}`
+}
+
 export async function getJson(slug: string[] | string) {
   let resource, json
   try {
