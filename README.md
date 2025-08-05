@@ -1,6 +1,6 @@
 # Basic Starter
 
-A simple starter for building your site with Next.js and Drupal (Decoupled Kit module).
+Headless version of Drupal CMS using Next.js .
 Forked from https://github.com/chapter-three/next-drupal-basic-starter .
 
 ## How to install
@@ -31,7 +31,7 @@ Forked from https://github.com/chapter-three/next-drupal-basic-starter .
 
 ## Resources
 
-  - Demo-project: https://github.com/cooldrupal/drupal-top100-next
-  - Demo-site: https://drupaltop100.vercel.app/
+  - Other demo-project: https://github.com/cooldrupal/drupal-top100-next
+  - Other demo-site: https://drupaltop100.vercel.app/
 
   Author: Serhii Klietsov - https://www.linkedin.com/in/serhii-klietsov-a125909a/
