@@ -7,15 +7,17 @@ import type { Metadata } from "next"
 import { getNode } from "@/lib/node"
 import { Homepage } from "@/components/nodes/Homepage"
 
+const slug = '/'
+
 export const metadata: Metadata = {
   title: "Drupal CMS Blog",
-  description: "A Next.js site powered by a Drupal backend (Decoupled Kit).",
+  description: "Headless version of Drupal CMS using Next.js.",
 }
 
 export default async function Home() {
-  const blocks = await getBlocks('/', ['content_below'])
-  const menu = await getMenus('/', ['primary_menu', 'footer_top'])
-  const homepage = await getNode('/home')
+  const blocks = await getBlocks(slug, ['content_below'])
+  const menu = await getMenus(slug, ['primary_menu', 'footer_top'])
+  const homepage = await getNode(slug)
   return (
     <>
     <Header menus={menu?.primary_menu} />
