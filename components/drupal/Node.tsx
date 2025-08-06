@@ -16,12 +16,13 @@ const componentsMap: Record<string, React.ComponentType<NodeProps>> = {
 };
 
 export function Node({ node, view }: NodeProps) {
+  const data = node.attributes ?? node;
   let node_type = node.type
   if (view) {
     node_type = `${node_type}--${view}`
   }
   const Component = componentsMap[node_type];
-  return Component ? <Component node={node} /> : <Default node={node} />;
+  return Component ? <Component node={data} /> : <Default node={data} />;
 }
 
 export function getNodeTypes(): string[] {
