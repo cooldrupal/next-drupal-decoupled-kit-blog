@@ -9,7 +9,6 @@ export function getMetatag(entity: any) {
       }, {} as Record<string, string>);
     return metaAttributes;
   }
-  else {
-    return {};
-  }
+
+  return {};
 }

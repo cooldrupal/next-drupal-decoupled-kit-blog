@@ -122,7 +122,6 @@ export default async function NodePage(props: NodePageProps) {
     <h1 className="mb-4 text-6xl font-black leading-tight text-center">{is_taxonomy ? node.name : node.title}</h1>
     <Breadcrumb breadcrumb={breadcrumb} delimiter={'>'} />
     {is_taxonomy ? (
-      <>
       <ul className="w-full grid grid-cols-1 sm:grid-cols-2 gap-8">
         {view?.results.map((row: any) => (
           <li key={row.id}>
@@ -130,7 +129,6 @@ export default async function NodePage(props: NodePageProps) {
           </li>
         ))}
       </ul>
-      </>
     ) : (
       <div className={hasSidebar ? 'flex flex-col md:flex-row gap-12' : ''}>
         <main className={hasSidebar ? 'w-full md:w-2/3' : 'w-full'}>

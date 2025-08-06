@@ -15,8 +15,7 @@ export const metadata: Metadata = {
 export default async function Home() {
   const blocks = await getBlocks('/', ['content_below'])
   const menu = await getMenus('/', ['primary_menu', 'footer_top'])
-  const homepage = await getNode('/home');
-
+  const homepage = await getNode('/home')
   return (
     <>
     <Header menus={menu?.primary_menu} />

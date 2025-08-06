@@ -50,7 +50,7 @@ export default async function BlogPage1(props: ViewPageProps) {
       placeholder: 'Categories',
     },
   ]
-  const vocabularies = selects.map(select => select.optionsKey);
+  const vocabularies = selects.map(select => select.optionsKey)
   const selectOptions = await getTaxonomyTermsCollection(vocabularies)
   return (
     <>
