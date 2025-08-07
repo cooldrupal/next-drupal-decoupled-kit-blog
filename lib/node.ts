@@ -2,7 +2,7 @@ import { drupal } from "@/lib/drupal"
 import { nodesMap } from "@/params/nodes"
 import { getPathFromSlug } from "@/lib/utils"
 
-export async function getNode(slug: string | string[]) {
+export async function getNode(slug: string | string[], node_params?: any) {
   const path = getPathFromSlug(slug)
 
   const translatedPath = await drupal.translatePath(path)
@@ -13,7 +13,7 @@ export async function getNode(slug: string | string[]) {
   const type = translatedPath.jsonapi?.resourceName!
   const uuid = translatedPath.entity.uuid
 
-  const params = nodesMap(type)?.params ?? {}
+  const params = node_params ?? nodesMap(type)?.params ?? {}
   const resource = await drupal.getResource(type, uuid, {
     params,
   })
