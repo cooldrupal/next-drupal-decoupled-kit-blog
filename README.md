@@ -28,10 +28,12 @@ Forked from https://github.com/chapter-three/next-drupal-basic-starter .
     Get redirect by current page.
   - getMetatag()
     Get metatags for current page.
+  - getJson()
+    Get JSON:API data by path.
 
 ## Resources
 
   - Other demo-project: https://github.com/cooldrupal/drupal-top100-next
-  - Other demo-site: https://drupaltop100.vercel.app/
+  - Other demo-site: https://drupaltop100.vercel.app
 
-  Author: Serhii Klietsov - https://www.linkedin.com/in/serhii-klietsov-a125909a/
+  Author: Serhii Klietsov - https://www.linkedin.com/in/serhii-klietsov-a125909a

@@ -39,11 +39,8 @@ export function textSummary(
 
   // Remove HTML tags if present
   const cleanText = text.replace(/<[^>]+>/g, '');
-
-  // Trim whitespace
   const trimmedText = cleanText.trim();
 
-  // If text is shorter than requested length, return as is
   if (trimmedText.length <= length) {
     return trimmedText;
   }

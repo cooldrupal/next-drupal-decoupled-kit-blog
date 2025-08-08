@@ -24,4 +24,3 @@ export async function getEntityByPath(slug: string | string[], params?: any) {
   return entity
 }
 
-
