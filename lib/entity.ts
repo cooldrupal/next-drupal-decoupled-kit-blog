@@ -1,8 +1,12 @@
 import { drupal } from "@/lib/drupal"
-import { getPathFromSlug } from "@/lib/utils"
+import { getPathFromSlug, getJson } from "@/lib/utils"
 import { getNode } from "@/lib/node"
 
 export async function getEntity(type: string, uuid: string, params?: any) {
+  if (type == 'json') {
+    return await getJson(uuid)
+  }
+
   return await drupal.getResource(type, uuid, { params })
 }
 
