@@ -15,3 +15,4 @@ export async function getCollection(type: string, slug: string | string[], param
       return null
   }
 }
+

@@ -39,8 +39,11 @@ export function textSummary(
 
   // Remove HTML tags if present
   const cleanText = text.replace(/<[^>]+>/g, '');
+
+  // Trim whitespace
   const trimmedText = cleanText.trim();
 
+  // If text is shorter than requested length, return as is
   if (trimmedText.length <= length) {
     return trimmedText;
   }
@@ -76,6 +79,10 @@ export function filterParams(searchParams: SearchParams): Filters {
     }
   }
   return filters;
+}
+
+export function pageParam(searchParams: SearchParams): number {
+  return parseInt(searchParams?.page?.toString() || '0')
 }
 
 export function entityInfo(type: string) {
