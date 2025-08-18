@@ -7,7 +7,7 @@ import { blocksMap } from "@/params/blocks"
 */
 
 export function getApiVersion() {
-  const apiVersion = parseInt(process.env.DECOUPLED_KIT_API_VERSION ?? '1', 10)
+  const apiVersion = parseInt(process.env.DECOUPLED_KIT_API_VERSION ?? '2', 10)
   return apiVersion
 }
 
